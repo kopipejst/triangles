@@ -4,8 +4,8 @@ var height = document.body.clientHeight;
 var width = document.body.clientWidth;
 
 var canvas = document.getElementById('triglici');
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = width;
+canvas.height = height;
 
 var ctx = canvas.getContext('2d');
 var c = [];
@@ -109,7 +109,7 @@ dots.realRandom = function(no) {
     var dots = [];
 
     for (var i = 0; i < no; i++) {
-        dots.push([Math.random() * 600, Math.random() * 600]);
+        dots.push([Math.random() * width, Math.random() * height]);
     }
 
     return dots;
