@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    background: #111;
+    font-family: 'Raleway', sans-serif;
+}
+
+h1, h2, p {
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+}
+
+h2 {
+    font-weight: 300;
+    text-transform: uppercase;
+    padding: 20px 0 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+    clear: both;
+}
+
+canvas {
+    margin: 0 auto;
+    display: block;
+}
+
+p {
+    font-weight: 300;
+    text-align: right;
+}
+
+a {
+    color: #ccc;
+    text-decoration: none;
+}
+a:hover {
+    color: #fff;
+}
+
+.holder {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    margin-left: -225px;
+    color: #f3f3f3;
+    width: 450px;
+}
+
+.header,
+.options {
+    padding: 20px;
+    background-color: #111;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.options {
+    clear: both;
+    font-size: 12px;
+    padding-top: 0;
+    width: 280px;
+    margin: 10px auto 0;
+}
+
+
+.options-holder label {
+    display: block;
+    margin-top: 5px;
+    text-align: right;
+    width: 100%;
+}
+
+.options-holder input {
+    margin-left: 10px;
+    border: none;
+    background-color: #fff;
+    color: #111;
+    padding: 2px 5px 3px;
+    width: 50px;
+}
+
+input {
+    margin-right: 5px;
+}
+input[name=array] {
+    width: 200px;
+}
+
+.options-choose label {
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
+.sizes {
+    float: left;
+}
+
+small {
+    font-size: 10px;
+}
+
+
+
+
+
+
+
+.minicolors-theme-default .minicolors-swatch {
+    top: 0;
+    left: 10px;
+}
+
+
+
+.footer {
+    margin: 20px 0 0 0;
+    padding: 5px 0 0 0;
+    text-align: center;
+    border-top: 1px solid #555;
+}
+
+
+
+
