@@ -18,6 +18,9 @@ triglici.draw = function (params) {
     canvas.height = height;
 
     ctx.clearRect(0, 0, width, height);
+    ctx.rect(0, 0, width, height);
+    ctx.fillStyle = '#111';
+    ctx.fill();
 
     for (var i = 0; i < triangles.length; i += 3) {
         ctx.beginPath();
@@ -39,6 +42,7 @@ triglici.draw = function (params) {
     }
 
 }
+
 
 
 
