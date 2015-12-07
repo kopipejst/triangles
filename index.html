@@ -1,0 +1,218 @@
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
+
+    <link  rel="stylesheet" href="jquery.minicolors.css" />
+    <link  rel="stylesheet" href="style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="jquery.minicolors.min.js"></script>
+
+   
+    <script src="delaunay.js"></script>
+    <script src="dots.js"></script>
+    <script src="colors.js"></script>
+    <script src="triglici2.js"></script>
+
+
+</head>
+<body>
+
+    <canvas id="triglici"></canvas>
+
+
+    <div class="holder">
+        <div class="header">
+            <h1>JavaScript Art: Triangles</h1>
+            <p>read article at <a href="">workshop.rs</a></p>
+        </div>
+
+        <div class="options">
+
+            <h2>size <small>zeros for full screen</small></h2>
+            <div class="options-holder">
+                <div class="sizes">
+                    <a href="#" data-width="1440" data-height="2560">Nexus 6</a><br />
+                    <a href="#" data-width="1080" data-height="1920">Nexus 5, iPhone 6+</a><br />
+                    <a href="#" data-width="750" data-height="1334">iPhone 6</a><br />
+                    <a href="#" data-width="640" data-height="1136">iPhone 5</a><br />
+                    <a href="#" data-width="0" data-height="0">Fullscreen</a><br />
+                </div>
+                <label>width<input type="text" name="width" value="0" /></label>
+                <label>height<input type="text" name="height" value="0" /></label>
+            </div>
+
+            <h2>dots</h2>
+            <div class="options-choose">
+                <label><input type="radio" value="random" name="dots" data-params='{ "number-of-dots": 50 }' />Random</label>
+                <label><input type="radio" value="randomFullScreen" name="dots" data-params='{ "number-of-dots": 100, "dots-on-edges": 15 }' />Fullscreen random</label>
+                <label><input type="radio" value="circles" name="dots" data-params='{ "number-of-circles": 15, "steps": 50, "distance": 0 }' />Circles</label>
+                <label><input type="radio" value="rectangles" name="dots" data-params='{ "number-on-x": 25, "number-on-y": 30}' />Rectangles</label>
+                <label><input type="radio" value="spiral" name="dots" data-params='{ "number": 1200, "factor": 5}' />Spiral</label>
+                <label><input type="radio" value="arrows" name="dots" data-params='{ "number-on-x": 15, "number-on-y": 30}' />Arrows</label>
+            </div>
+
+            <div class="dots-options options-holder">
+
+            </div>
+
+
+            <h2>colors</h2>
+            <div class="options-choose">
+                <label><input type="radio" value="randomColor" name="colors" />Random</label>
+                <label><input type="radio" value="randomOpacity" name="colors" data-params='{ "color": "rgb(46, 138, 199)"}' />Random opacity</label>
+                <label><input type="radio" value="array" name="colors" data-params='{ "array": ["#69D2E7", "#A7DBD8", "#E0E4CC", "#F38630", "#FA6900"]}' />Array</label>
+                <label><input type="radio" value="gradient" name="colors" data-params='{ "color": "rgb(46, 138, 199)", "step": 1}' />Gradient</label>
+            </div>
+
+            <div class="colors-options options-holder">
+
+            </div>
+
+            <p class="footer">
+                press space to hide/show this window
+            </p>
+
+        </div>
+    </div>
+
+
+
+    <script>
+
+        var options = {
+            canvas: document.getElementById('triglici'),
+            dots: dots.circles,
+            dotsParams: [15, 50, 0],
+            color: colors.array,
+            colorParams: [['rgb(178,24,43)','rgb(214,96,77)','rgb(244,165,130)','rgb(253,219,199)','rgb(255,255,255)','rgb(224,224,224)','rgb(186,186,186)','rgb(135,135,135)','rgb(77,77,77)']]
+        };
+
+        $('input[name="width"]').keyup( function (e) {
+            options.width = parseInt($(this).val());
+            triglici.draw(options);
+        });
+
+        $('input[name="height"]').keyup( function (e) {
+            options.height = parseInt($(this).val());
+            triglici.draw(options);
+        });
+
+
+        $('input[name="dots"]').click( function (e) {
+            options.dots = dots[$(this).attr('value')];
+            options.dotsParams = [];
+
+            var params = $(this).data('params');
+            $('.dots-options').html('');
+
+            for (var i in params) {
+                $('.dots-options').append('<label>' + i.replace(/-/g, ' ') + '<input type="number" name="' + i + '"value="' + params[i] + '" /></label>');
+                options.dotsParams.push(params[i]);
+            }
+
+            $('.dots-options input').keyup( function () {
+                options.dotsParams = [];
+
+                $.each($('.dots-options input'), function (i, item) {
+                    var val = parseInt($(item).val());
+
+                    if ($(item).val()) {
+                        if ($(item).attr('name') === 'distance' && val < 10) {
+                            val = 0;
+                        }
+                        options.dotsParams.push(val); 
+                    } else {
+                        return;
+                    }
+                });
+
+                triglici.draw(options);
+
+            });     
+
+            triglici.draw(options);
+        });
+
+
+        $('input[name="colors"]').click( function (e) {
+            options.color = colors[$(this).attr('value')];
+            options.colorParams = [];
+            options.colorFunction = $(this).attr('value');
+
+            var params = $(this).data('params');
+            $('.colors-options').html('');
+            
+            for (var i in params) {
+               $('.colors-options').append('<label>' + i + '<input name="' + i + '"value="' + params[i] + '" /></label>');
+                options.colorParams.push(params[i]);
+            }
+
+            $('input[name="color"').minicolors({
+                format: 'rgb',
+                change: function () {
+                    $('input[name="color"').trigger('keyup');
+                }
+            });
+
+            $('.colors-options input').keyup( function () {
+                options.colorParams = [];
+
+                if (options.colorFunction === 'gradient') {
+                    colors.current = 0;
+                }
+
+                $.each($('.colors-options input'), function (i, item) {
+                    var val = $(item).val();
+
+                    if ($(item).val() != 0) {
+
+                        if (options.colorFunction === 'array') {
+                            val = val.split(',');
+                        }
+
+                        options.colorParams.push(val); 
+                    } else {
+                        return;
+                    }
+                });
+
+                triglici.draw(options);
+
+            });     
+
+            triglici.draw(options);
+        });
+
+
+        $('.sizes a').click( function (e) {
+            e.preventDefault();
+            var w = $(this).data('width'),
+                h = $(this).data('height');
+            $('input[name="width"]').val(w);
+            $('input[name="height"]').val(h);
+            options.width = w;
+            options.height = h;
+            triglici.draw(options);
+        })
+
+        $('input[name="dots"][value="spiral"]').click();
+        $('input[name="colors"][value="array"]').click();
+
+
+        $(window).keypress(function (e) {
+            if (e.keyCode === 0 || e.keyCode === 32) {
+                e.preventDefault();
+                if ($('.holder').is(':visible')) {
+                    $('.holder').hide();
+                } else {
+                    $('.holder').show();
+                }
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>
