@@ -41,8 +41,8 @@
                     <a href="#" data-width="640" data-height="1136">iPhone 5</a><br />
                     <a href="#" data-width="0" data-height="0">Fullscreen</a><br />
                 </div>
-                <label>width<input type="text" name="width" value="0" /></label>
-                <label>height<input type="text" name="height" value="0" /></label>
+                <label>width<input type="number" name="width" value="0" /></label>
+                <label>height<input type="number" name="height" value="0" /></label>
             </div>
 
             <h2>dots</h2>
@@ -85,11 +85,13 @@
 
         var options = {
             canvas: document.getElementById('triglici'),
-            dots: dots.circles,
-            dotsParams: [15, 50, 0],
-            color: colors.array,
-            colorParams: [['rgb(178,24,43)','rgb(214,96,77)','rgb(244,165,130)','rgb(253,219,199)','rgb(255,255,255)','rgb(224,224,224)','rgb(186,186,186)','rgb(135,135,135)','rgb(77,77,77)']]
+            dots: dots.randomFullScreen,
+            dotsParams: [100, 15],
+            color: colors.randomOpacity,
+            colorParams: ['rgb(180,190,40)']
         };
+
+        triglici.draw(options);
 
         $('input[name="width"]').keyup( function (e) {
             options.width = parseInt($(this).val());
@@ -199,8 +201,8 @@
             triglici.draw(options);
         })
 
-        $('input[name="dots"][value="spiral"]').click();
-        $('input[name="colors"][value="array"]').click();
+        // $('input[name="dots"][value="spiral"]').click();
+        // $('input[name="colors"][value="array"]').click();
 
 
         $(window).keypress(function (e) {
