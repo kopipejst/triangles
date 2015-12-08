@@ -1,24 +1,55 @@
 <html>
 <head>
+<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
 
-    <style>
-        body {
-            background: black;
-            text-align: center;
-            margin: 0;
-        }
+<style>
+    body {
+        background: #111;
+        text-align: center;
+        margin: 0;
+        font-family: 'Raleway', sans-serif;
+    }
 
+    .message {
+        position: absolute;
+        top: 0;
+        background-color: #111;
+        color: #c3c3c3;
+        padding: 20px;
+        top: 30px;
+    }
 
-    </style>
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
 
-    <script src="delaunay.js"></script>
-
+<script src="delaunay.js"></script>
 
 </head>
 <body>
 
     <canvas id="triglici"></canvas>
+    <script src="dots.js"></script>
+    <script src="colors.js"></script>
     <script src="triglici.js"></script>
+
+    <div class="message">
+        demo for <a href="http://workshop.rs/2015/12/javascript-art-triangles">workshop.rs</a> article
+    </div>
+
+    <script>
+        var options = {
+            canvas: document.getElementById('triglici'),
+            dots: dots.circles,
+            dotsParams: [15, 50, 0],
+            color: colors.array,
+            colorParams: [['rgb(178,24,43)','rgb(214,96,77)','rgb(244,165,130)','rgb(253,219,199)','rgb(255,255,255)','rgb(224,224,224)','rgb(186,186,186)','rgb(135,135,135)','rgb(77,77,77)']]
+        };
+
+        triglici.draw(options);
+    </script>
 
 </body>
 </html>
