@@ -116,7 +116,7 @@ small {
     border-top: 1px solid #555;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 750px) {
     .holder {
         width: 100%;
         position: absolute;
