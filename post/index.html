@@ -1,0 +1,74 @@
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
+
+<style>
+    body {
+        background: #111;
+        text-align: center;
+        margin: 0;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    .message {
+        position: absolute;
+        top: 0;
+        background-color: #111;
+        color: #c3c3c3;
+        padding: 20px;
+        top: 30px;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+
+<script src="delaunay.js"></script>
+
+</head>
+<body>
+
+    <div class="message">
+        demo for <a href="http://workshop.rs/2015/12/javascript-art-triangles">workshop.rs</a> article
+    </div>
+
+    <canvas id="triglici"></canvas>
+
+    <script>
+        var width = 800;
+        var height = 600;
+        var no = 10;
+        var dots = [];
+
+        for (var i = 0; i < no; i++) {
+            dots.push([Math.random() * width, Math.random() * height]);
+        }
+
+        var triangles = Delaunay.triangulate(dots);
+
+        var canvas = document.getElementById('triglici');
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext('2d');
+
+        for (var i = 0; i < triangles.length; i += 3) {
+            ctx.beginPath();
+            ctx.moveTo(dots[triangles[i]][0], dots[triangles[i]][1]);
+            ctx.lineTo(dots[triangles[i + 1]][0], dots[triangles[i + 1]][1]);
+            ctx.lineTo(dots[triangles[i + 2]][0], dots[triangles[i + 2]][1]);
+            
+            var color = 'rgba(' + parseInt(Math.random() * 255) + ',' + parseInt(Math.random() * 255) + ',' + parseInt(Math.random() * 255) + ', 1)';
+            
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+            ctx.fill();
+        }
+    </script>
+
+</body>
+</html>
